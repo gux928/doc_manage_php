@@ -1,0 +1,104 @@
+*{clear;}
+body 
+{
+	width: 960px;
+	margin: 0 auto;
+}
+.v-span10
+{
+	height: 900px;
+}
+.center
+{
+	margin: 30px auto !important;
+}
+.bottom
+{
+	position: absolute;
+	top:auto !important;
+	bottom: 15px;
+}
+.rot1
+{
+	-moz-transform:rotate(90deg); 
+	-webkit-transform:rotate(90deg); 
+	transform:rotate(90deg); 
+	filter:progid:DXImageTransform.Microsoft.BasicImage(rotation=1);
+}
+.rot2
+{
+	-moz-transform:rotate(180deg); 
+	-webkit-transform:rotate(180deg); 
+	transform:rotate(180deg); 
+	filter:progid:DXImageTransform.Microsoft.BasicImage(rotation=2);
+}
+.rot3
+{
+	-moz-transform:rotate(270deg); 
+	-webkit-transform:rotate(270deg); 
+	transform:rotate(270deg); 
+	filter:progid:DXImageTransform.Microsoft.BasicImage(rotation=3);
+}
+.rot4
+{
+	-moz-transform:rotate(360deg); 
+	-webkit-transform:rotate(360deg); 
+	transform:rotate(360deg); 
+	filter:progid:DXImageTransform.Microsoft.BasicImage(rotation=4);
+}
+.one-tab ul
+{
+	list-style: none;
+}
+#login-float
+{
+	height: 160px;
+	border:solid 1px;
+	z-index: 100;
+	position: fixed;
+}
+#login-float form
+{
+	margin: 30px auto 30px auto;
+
+}
+.metrouicss #logo
+{
+	width: 800px;
+	margin-bottom:30px;
+	margin-top: 30px;
+	z-index: 99;
+	
+}
+.metrouicss .hide
+{
+	display: none;
+}
+.metrouicss .nav-tabs
+{
+	margin-top: 60px;
+	list-style-type: none;
+}
+.metrouicss .nav-tabs li
+{
+	display: inline-block;
+}
+.metrouicss .tab-content ul li
+{
+	margin: 10px 0px 0px 0px;
+}
+#windowsbg
+{
+	display:none;
+	position:absolute;
+	width:100%;
+	height:100%;
+	background:#000;
+	top:0;
+	left:0;
+	opacity:0;
+}
+#rot
+{
+	opacity: 0.7;
+}
