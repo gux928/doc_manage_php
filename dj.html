@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /> 
+    <link rel="stylesheet" type="text/css" href="./css/modern.css" /> 
+    <link rel="stylesheet" type="text/css" href="./css/jquery-ui-1.10.2.custom.css" /> 
+    <link rel="stylesheet" type="text/css" href="./css/jquery.ui.datepicker.css" /> 
+    <link rel="stylesheet" type="text/css" href="./css/s2.css" /> 
+    <script src='./js/jquery-1.9.0.js'></script> 
+    <script src="./js/jquery-ui-1.10.2.custom.js"></script>
+    <script src='./js/dj.js'></script> 
+    <!-- <script src='./js/mycarousel.js'></script>  -->
+    
+</head>
+<body class="metrouicss spanN bg-color-blue"> 
+<div id='login'>
+</div>
+<div class="nav-tabs sapn12">	
+			<a class="button first default bg-color-blue span3">收文</a>
+			<a class="button span3">信访</a>
+			<a class="button span3">发文</a>
+			<a class="button last span3">其他</a>	 
+</div>
+<div class="tab-content span12 center">
+	<div class='one-tab span9 center'>
+		<h2>收文登记</h2>
+			<div class="input-control text span3 v-span2 float-left">
+				<label ><h3>登记日期:</h3></label><br>
+				<input type="text" id='datepicker' name='date'/>
+			</div>	
+			<div class="span5 offset1 v-span2 float-left">
+				<label><h3>内部编号:</h3></label><br>
+				<span class="low-label float-left">收文(</span>
+				<div class="input-control text span1  float-left">											
+					<input type="text" id='o-year' name='year'/>
+				</div>
+				<span class="low-label float-left">)</span>
+				<div class="input-control text span1 float-left" >							
+					<input type="text" name='num'/>
+				</div>
+				<span class="low-label float-left">号</span>
+			</div>
+		<!-- </div> -->
+			<div style="clear:both"></div>
+			<div class="input-control text span3 v-span2 float-left">
+				<label ><h3>来文单位:</h3></label><br>
+				<input type="text" name='lwdw'/>
+			</div>	
+			<div class="input-control text span3 v-span2 offset1 float-left">
+				<label><h3>文件编号:</h3></label><br>											
+					<input type="text" name='wjbh'/>
+			</div>			
+			<div class="input-control textarea float-clear">
+				<label ><h3>文件内容:</h3></label><br>
+				<textarea name ='wjnr'></textarea>
+			</div>
+			<div class="input-control text span3 v-span2">
+				<label><h3>上传文件:</h3></label><br>											
+					<input type="file" name='path'/>
+			</div>	
+			<a class='button default bg-color-blue' id='submit'>保存文档</a>
+	</div>
+	<div class='one-tab'></div>
+	<div class='one-tab'></div>
+	<div class='one-tab'></div>
+</div>
+
+	
+	<div id='error-notice'>	
+		<b id="sticker-left"></b>
+		不能为空！
+	</div>
+
+        
+</body>
+</html>

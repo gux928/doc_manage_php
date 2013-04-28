@@ -1,15 +1,15 @@
 <?php
-function conDb()
-{
-    $dsn='mysql:host=127.0.0.1;dbname=mydoc;';
-    $usr='mydoc';
-    $key='mydoc'; 
-    $dbn=new pdo($dsn,$usr,$key);
-    $dbn->setAttribute(PDO::ATTR_PERSISTENT,true);
-    $dbn->setAttribute(PDO::ATTR_ERRMODE,PDO::ERRMODE_EXCEPTION);
-    $dbn->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE,PDO::FETCH_NAMED);
-    return $dbn;
-}
+// function conDb()
+// {
+//     $dsn='mysql:host=127.0.0.1;dbname=mydoc;';
+//     $usr='mydoc';
+//     $key='mydoc'; 
+//     $dbn=new pdo($dsn,$usr,$key);
+//     $dbn->setAttribute(PDO::ATTR_PERSISTENT,true);
+//     $dbn->setAttribute(PDO::ATTR_ERRMODE,PDO::ERRMODE_EXCEPTION);
+//     $dbn->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE,PDO::FETCH_NAMED);
+//     return $dbn;
+// }
 function cz($lx,$id)
 {
     switch ($lx) 

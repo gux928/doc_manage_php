@@ -1,3 +1,7 @@
+function getDate () {
+	var d =new Date();
+	return d.getFullYear()+'-'+(d.getMonth()+1)+'-'+d.getDate();
+}
 $(function() {
 	// var tab=$("#myTab>li").html();
 	// var index =$("nav-tabs a").index(this);
@@ -36,6 +40,7 @@ $(function() {
 	 // var url2=url+document.location.search;
 	 // // alert(url2);
 	 // $("#myjpg").load(url2);
+	 $('#date').val(getDate());
 
 });
 

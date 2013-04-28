@@ -1,16 +1,4 @@
 <?php
-	function conDb()
-	{
-	    $dsn='mysql:host=127.0.0.1;dbname=mydoc;';
-	    $usr='mydoc';
-	    $key='mydoc'; 
-	    $dbn=new pdo($dsn,$usr,$key);
-	    $dbn->setAttribute(PDO::ATTR_PERSISTENT,true);
-	    $dbn->setAttribute(PDO::ATTR_ERRMODE,PDO::ERRMODE_EXCEPTION);
-	    $dbn->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE,PDO::FETCH_NAMED);	    
-		$dbn->query("set names utf8");
-	    return $dbn;
-	}
 	include "config.php";
 	try
 	{
@@ -29,25 +17,9 @@
 		$html="";
 		for ($i=0; $i < $jgts ; $i++) 
 		{ 
-			$html.="<li><a href='.\show.php?lx=sw&id=".$rs[$i]['id']."''>".$rs[$i]['wjnr']."</a></li>";
+			$html.="<li><a href='.\show.html?lx=sw&id=".$rs[$i]['id']."''>".$rs[$i]['wjnr']."</a></li>";
 		}		
-		$swhtml = $html;
-		// $html="";
-		// $sql_select="
-		// 			SELECT  `id` ,  `wjnr` 
-		// 			FROM  `fw` 
-		// 			ORDER BY  id DESC 
-		// 			LIMIT 0 , 10
-		// ";
-		// $sth=$dbn->prepare($sql_select);
-		// $sth->execute();
-		// $rs=$sth->fetchall();
-		// $jgts=$sth->rowCount();
-		// for ($i=0; $i < $jgts ; $i++) 
-		// { 
-		// 	$html.="<li><a href='.\show.php?lx=fw&id=".$rs[$i]['id']."''>".$rs[$i]['wjnr']."</a></li>";
-		// }		
-		// $fwhtml = $html;
+		$swhtml = $html;		
 		$html="";
 		$sql_select="
 					SELECT  `id` ,  `wjnr` 

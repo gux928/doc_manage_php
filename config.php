@@ -61,12 +61,23 @@
 // 		echo "connect faild".$e->getMessage();
 // 	}	
 // }
-
+function conDb()
+{
+    $dsn='mysql:host=127.0.0.1;dbname=mydoc;';
+    $usr='mydoc';
+    $key='mydoc'; 
+    $dbn=new pdo($dsn,$usr,$key);
+    $dbn->setAttribute(PDO::ATTR_PERSISTENT,true);
+    $dbn->setAttribute(PDO::ATTR_ERRMODE,PDO::ERRMODE_EXCEPTION);
+    $dbn->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE,PDO::FETCH_NAMED);	    
+	$dbn->query("set names utf8");
+    return $dbn;
+}
 function formatOne($arr)
 {
 	switch ($arr['lx']) {
 		case 'sw':
-			$str="<table class=dtnr border=0 width=80%><tr><td  colspan=4 margin=10px><a href='./show.php?lx=sw&id=".$arr["id"]."'>【收文】".$arr["wjnr"]."</a></td></tr>";
+			$str="<table class=dtnr border=0 width=80%><tr><td  colspan=4 margin=10px><a href='./show.html?lx=sw&id=".$arr["id"]."'>【收文】".$arr["wjnr"]."</a></td></tr>";
 			$str=$str."<tr><td width=10%>内部编号：</td><td width=20%>收文（".$arr["year"].")".$arr["nbbh"]."号</td>";
 			$str=$str."<td width=10%>文号：</td><td width=20%>".$arr["from_no"]." </td></tr>";
 			$str=$str."<tr><td width=10%>来文单位：</td><td width=20%>".$arr["lwdw"]."</td>";
@@ -74,7 +85,7 @@ function formatOne($arr)
 			return $str;
 			break;
 		case 'fw':
-			$str="<table class=dtnr border=0 width=80%><tr><td  colspan=4 margin=10px><a href='./show.php?lx=fw&id=".$arr["id"]."'>【发文】".$arr["wjnr"]."</a></td></tr>";
+			$str="<table class=dtnr border=0 width=80%><tr><td  colspan=4 margin=10px><a href='./show.html?lx=fw&id=".$arr["id"]."'>【发文】".$arr["wjnr"]."</a></td></tr>";
 			$str=$str."<tr><td width=10%>内部编号：</td><td width=20%>扬公房发（".$arr["year"].")".$arr["nbbh"]."号</td>";
 			$str=$str."<td width=10%>发文科室：</td><td width=20%>".$arr["fwks"]." </td></tr>";
 			$str=$str."<tr><td width=10%>拟稿人：</td><td width=20%>".$arr["nigaoren"]."</td>";
@@ -82,7 +93,7 @@ function formatOne($arr)
 			return $str;
 			break;
 		case 'xf':
-			$str="<table class=dtnr border=0 width=80%><tr><td  colspan=4 margin=10px><a href='./show.php?lx=xf&id=".$arr["id"]."'>【信访】".$arr["wjnr"]."</a></td></tr>";
+			$str="<table class=dtnr border=0 width=80%><tr><td  colspan=4 margin=10px><a href='./show.html?lx=xf&id=".$arr["id"]."'>【信访】".$arr["wjnr"]."</a></td></tr>";
 			$str=$str."<tr><td width=10%>内部编号：</td><td width=20%>信访（".$arr["year"].")".$arr["nbbh"]."号</td>";
 			$str=$str."<td width=10%>信访人：</td><td width=20%>".$arr["xfren"]." </td></tr>";
 			$str=$str."<tr><td width=10%>来文单位：</td><td width=20%>".$arr["lwdw"]."</td>";
@@ -90,7 +101,7 @@ function formatOne($arr)
 			return $str;
 			break;
 		case 'yb':
-			$str="<table class=dtnr border=0 width=80%><tr><td  colspan=4 margin=10px><a href='./show.php?lx=yb&id=".$arr["id"]."'>【其他】".$arr["wjnr"]."</a></td></tr>";
+			$str="<table class=dtnr border=0 width=80%><tr><td  colspan=4 margin=10px><a href='./show.html?lx=yb&id=".$arr["id"]."'>【其他】".$arr["wjnr"]."</a></td></tr>";
 			$str=$str."<tr><td width=10%>文件标题：</td><td width=20%>".$arr["wjbt"]."</td>";
 			$str=$str."<td width=10%>登记日期：</td><td width=20%>".$arr["riqi"]." </td></tr></table>";
 			return $str;
@@ -103,146 +114,7 @@ function formatOne($arr)
 	}
 }
 
-function echorecent()
-{
-	$dsn='mysql:host=localhost;dbname=mydoc;';
-	$usr='mydoc';
-	$keyword='mydoc';
-	try
-	{
-		$rs="";
-		$dbn=new pdo($dsn,$usr,$keyword);
-		$dbn->setAttribute(PDO::ATTR_ERRMODE,PDO::ERRMODE_EXCEPTION);
-		$dbn->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE,PDO::FETCH_NAMED);
-		$dbn->query("set names utf8");
-		$sql_select="
-					SELECT `id` ,  `wjnr`  
-					FROM  `sw` 
-					ORDER BY  `id` DESC 
-        			limit 0 ,10;
-		";
-		$sth=$dbn->prepare($sql_select);
-		$sth->execute();
-		$rs=$sth->fetchall();
-		$html="<div class='recent10' ><ul><p>最近收文</p>";
-		$jgts=$sth->rowCount();
-		for ($i=0; $i < $jgts ; $i++) 
-		{ 
-			$html.="<li><a href='.\show.php?lx=sw&id=".$rs[$i]['id']."''>".$rs[$i]['wjnr']."</a></li>";
-		}		
-		$html.="</ul></div>";
-		echo $html;
-		$html="";
-		$sql_select="
-					SELECT  `id` ,  `wjnr` 
-					FROM  `fw` 
-					ORDER BY  id DESC 
-					LIMIT 0 , 10
-		";
-		$sth=$dbn->prepare($sql_select);
-		$sth->execute();
-		$rs=$sth->fetchall();
-		$html.="<div class='recent10'><ul><p>最近发文</p>";
-		$jgts=$sth->rowCount();
-		for ($i=0; $i < $jgts ; $i++) 
-		{ 
-			$html.="<li><a href='.\show.php?lx=fw&id=".$rs[$i]['id']."''>".$rs[$i]['wjnr']."</a></li>";
-		}		
-		$html.="</ul></div>";
-		echo $html;
-		$html="";
-		$sql_select="
-					SELECT  `id` ,  `wjnr` 
-					FROM  xf 
-					ORDER BY  `id` DESC 
-					LIMIT 0 , 10
-		";
-		$sth=$dbn->prepare($sql_select);
-		$sth->execute();
-		$rs=$sth->fetchall();
-		$html.="<div class='recent10'><ul><p>最近信访</p>";
-		$jgts=$sth->rowCount();
-		for ($i=0; $i < $jgts ; $i++) 
-		{ 
-			$html.="<li><a href='.\show.php?lx=xf&id=".$rs[$i]['id']."''>".$rs[$i]['wjnr']."</a></li>";
-		}		
-		$html.="</ul></div>";
-		echo $html;
-		return;
-	}
-	catch(PDOException $e)
-	{
-		echo "connect faild".$e->getMessage();
-	}
-}
-function echorecent2()
-{
-	$dsn='mysql:host=localhost;dbname=mydoc;';
-	$usr='mydoc';
-	$keyword='mydoc';
-	try
-	{
-		$rs="";
-		$dbn=new pdo($dsn,$usr,$keyword);
-		$dbn->setAttribute(PDO::ATTR_ERRMODE,PDO::ERRMODE_EXCEPTION);
-		$dbn->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE,PDO::FETCH_NAMED);
-		$dbn->query("set names utf8");
-		$sql_select="
-					SELECT `id` ,  `wjnr`  
-					FROM  `sw` 
-					ORDER BY  `id` DESC 
-        			limit 0 ,10;
-		";
-		$sth=$dbn->prepare($sql_select);
-		$sth->execute();
-		$rs=$sth->fetchall();
-		$jgts=$sth->rowCount();
-		$html="";
-		for ($i=0; $i < $jgts ; $i++) 
-		{ 
-			$html.="<li><a href='.\show.php?lx=sw&id=".$rs[$i]['id']."''>".$rs[$i]['wjnr']."</a></li>";
-		}		
-		$swhtml = $html;
-		$html="";
-		$sql_select="
-					SELECT  `id` ,  `wjnr` 
-					FROM  `fw` 
-					ORDER BY  id DESC 
-					LIMIT 0 , 10
-		";
-		$sth=$dbn->prepare($sql_select);
-		$sth->execute();
-		$rs=$sth->fetchall();
-		$jgts=$sth->rowCount();
-		for ($i=0; $i < $jgts ; $i++) 
-		{ 
-			$html.="<li><a href='.\show.php?lx=fw&id=".$rs[$i]['id']."''>".$rs[$i]['wjnr']."</a></li>";
-		}		
-		$fwhtml = $html;
-		$html="";
-		$sql_select="
-					SELECT  `id` ,  `wjnr` 
-					FROM  xf 
-					ORDER BY  `id` DESC 
-					LIMIT 0 , 10
-		";
-		$sth=$dbn->prepare($sql_select);
-		$sth->execute();
-		$rs=$sth->fetchall();
-		$jgts=$sth->rowCount();
-		for ($i=0; $i < $jgts ; $i++) 
-		{ 
-			$html.="<li><a href='.\show.php?lx=xf&id=".$rs[$i]['id']."''>".$rs[$i]['wjnr']."</a></li>";
-		}	
-		$xfhtml = $html;
-		return array($swhtml,$xfhtml,$fwhtml);
-	}
-	catch(PDOException $e)
-	{
-		echo "connect faild".$e->getMessage();
-	}
-}
-function strsToArray($strs) 
+function strsToArray($strs)  //
 { 
 	$result = array(); 
 	$array = array(); 
@@ -261,7 +133,7 @@ function strsToArray($strs)
 	return $result; 
 } 
 
-function cz($lx,$id)
+function getContent($lx,$id)
 {
 	switch ($lx) 
 	{
@@ -281,16 +153,11 @@ function cz($lx,$id)
 			# code...
 			break;
 	}
-	$dsn='mysql:host=localhost;dbname=mydoc;';
-	$usr='mydoc';
-	$key='mydoc';	
+	
 	try
 	{
 		$rs="";
-		$dbn=new pdo($dsn,$usr,$key);
-		$dbn->setAttribute(PDO::ATTR_ERRMODE,PDO::ERRMODE_EXCEPTION);
-		$dbn->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE,PDO::FETCH_NAMED);
-		$dbn->query("set names utf8");
+		$dbn=conDb();
 		$sth=$dbn->prepare($sql_where);
 		$sth->execute(array($id));
 		$rs=$sth->fetch();
@@ -338,17 +205,11 @@ function echologin($isLogin)
 
 function checkusr($uname,$upass)
 {
-	$dsn='mysql:host=localhost;dbname=mydoc;';
-	$usr='mydoc';
-	$key='mydoc';
 	$sql_where="select * from mydoc.users where uname = ? and upassword = ?"; 
 	try
 	{
 		$rs="";
-		$dbn=new pdo($dsn,$usr,$key);
-		$dbn->setAttribute(PDO::ATTR_ERRMODE,PDO::ERRMODE_EXCEPTION);
-		$dbn->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE,PDO::FETCH_NAMED);
-		$dbn->query("set names utf8");
+		$dbn=conDb();
 		$sth=$dbn->prepare($sql_where);
 		$upass=md5($upass);
 		$sth->execute(array($uname,$upass));
@@ -362,81 +223,56 @@ function checkusr($uname,$upass)
 	return 0;
 
 }
-function showImg($url)
+function showImg($url,$no) //html 格式化单张图片
 {
-	$html="<li><img src=".$url." width='906' height='1285'></li>";
-	return $html;
+    $id="slide".$no;
+    $html="<div class='slide image' id=".$id." style='display: none;'><img class='rot4' src=".$url." width='906' height='1285'></div>";
+    return $html;
 }
-function echojpg($tifpath)
+function getJpg($tifpath) //获取tif转换jpg地址
 {
-	$path = $_SERVER['DOCUMENT_ROOT']."/test/up/".$tifpath;
-	if ((!$tifpath==null)&&(file_exists($path))) 
+    $fileName   =   rtrim($tifpath,'.tif');
+    $dir        =   "./jpg/".$fileName;
+    if(!file_exists($dir)) {           
+	    mkdir($dir);
+	    $filepath   =   $_SERVER['DOCUMENT_ROOT']."/github/mydoc/up/".$tifpath;   
+	    $image = new Imagick($filepath);
+	    $image->writeImages($_SERVER['DOCUMENT_ROOT']."/github/mydoc/jpg/".$fileName."/pic.jpg",false);
+    }
+    return glob($dir.'/*');
+}
+function htmlJpg($tifpath) //html格式化图片显示
+{
+    $filepath   =   $_SERVER['DOCUMENT_ROOT']."/github/mydoc/up/".$tifpath;
+    if ((!$filepath==null)&&(file_exists($filepath))) 
     { 
-    	$tempname=time();           
-        $path = $_SERVER['DOCUMENT_ROOT']."/test/up/".$tifpath;
-        $image = new Imagick($path);
-        // $image->resizeImage(1285,906,Imagick::FILTER_LANCZOS,1);
-        // echo "kuandu=".$image->getImageWidth()."<br>";
-        // echo "gaodu=".$image->getImageHeight()."<br>";
-        //$image->scaleImage(1285,906);
-        //$image->extentImage(1285,906,0,0);
-        $image->writeImages($_SERVER['DOCUMENT_ROOT']."/test/temp/".$tempname.".jpg",false);
-        $page_no=$image->getNumberImages();
-        $html="
-        	<div id='slideshow'> 
-            <ul class='slides'> 
-        ";
-        if ($page_no==1)
+        $jpgs   =   getJpg($tifpath);
+        $picNum =   count($jpgs);
+        $html   =   "";
+        //print_r($jpgs);
+        if ($picNum==1)
         {
-            $url="./temp/".$tempname.".jpg";
-            $image2 = new Imagick($url);
-            echo "kuandu2=".$image2->getImageWidth()."<br>";
-        	echo "gaodu2=".$image2->getImageHeight()."<br>";
-            $html.=showImg($url);
-            $html.="
-            	</ul>
-            	</div>    	
-		    	
-            ";
+            $url    =   $jpgs[0];
+            $html.=showImg($url,1);            
         }
         else
         {
-            for($i=0;$i<$page_no;$i++)
+            $html="<div class='slide image' id='slide1'><img class='rot4' src=".$jpgs[0]." width='906' height='1285'></div>";
+            for($i=1;$i<$picNum;$i++)
             {
-                $url="./temp/".$tempname."-".$i.".jpg";
-          //       $image2 = new Imagick($_SERVER['DOCUMENT_ROOT']."/test/temp/".$tempname."-".$i.".jpg");
-          //       $image2->resizeImage(906,1285,Imagick::FILTER_LANCZOS,1);
-          //       $image2->writeImages($_SERVER['DOCUMENT_ROOT']."/test/temp/".$tempname."-".$i.".jpg",false);                
-          // 		echo "kuandu2=".$image2->getImageWidth()."<br>";
-        		// echo "gaodu2=".$image2->getImageHeight()."<br>";
-                $html.=showImg($url);
-
+                $html.=showImg($jpgs[$i],$i+1);
             }
-            $html.="
-            	</ul>
-            	<span class='arrow previous'></span>
-        		<span class='arrow next'></span>
-    			</div>    
-            	</div>    	
-            "; 
 
         }
-    	echo $html;
-	}
-	else
-	{
-		$html="
-        	<div id='slideshow'> 
-            <ul class='slides'> 
-        ";
-		$url="./up/null.png";
-        $html.=showImg($url);
-        $html.="
-            	</ul>
-            	</div>    	
+        echo $html;
+    }
+    else
+    {
+        echo "     
+            <div class='slide image' id='slide1'><img class='rot4' src='./up/null.png' width='906' height='1285'></div>
+            </div>      
             ";
-       	echo $html;
-	}
+    }
 }
 function echognan($lx,$id)    //显示修改，删除等
 {
@@ -461,9 +297,9 @@ function echognan($lx,$id)    //显示修改，删除等
 		return $html;
 	}
 }
-function echoneirong($lx,$id)
+function htmlContent($lx,$id) //显示文件内容
 {
-	$rs=cz($lx,$id);	
+	$rs=getContent($lx,$id);	
 	//print_r($rs);
 	if(!$rs==null)
 	{
@@ -480,7 +316,7 @@ function echoneirong($lx,$id)
 						<span class='xm'>文件内容:</span><br/>".$rs['wjnr']."<br/>
 						".echognan($lx,$id)."
 						</div>";
-				echojpg($rs['path']);
+				htmlJpg($rs['path']);
 				break;
 			case 'fw':
 				echo $html="
@@ -496,7 +332,7 @@ function echoneirong($lx,$id)
 						".echognan($lx,$id)."
 					</div>	
 					";
-				echojpg($rs['path']);
+				htmlJpg($rs['path']);
 				break;
 			case 'xf':
 				echo $html="
@@ -512,7 +348,7 @@ function echoneirong($lx,$id)
 						".echognan($lx,$id)."
 					</div>	
 					";
-				echojpg($rs['path']);
+				htmlJpg($rs['path']);
 				break;
 			case 'yb':
 				echo $html="
@@ -526,7 +362,7 @@ function echoneirong($lx,$id)
 				
 				</div>				
 				";
-				echojpg($rs['path']);
+				htmlJpg($rs['path']);
 				break;
 			
 			default:
@@ -575,20 +411,14 @@ function insertArray($lx,$neirong)
 	}
 	try
 	{
-		$dsn='mysql:host=localhost;dbname=mydoc;';
-		$usr='mydoc';
-		$key='mydoc';
-		$dbn=new pdo($dsn,$usr,$key);
-		$dbn->setAttribute(PDO::ATTR_ERRMODE,PDO::ERRMODE_EXCEPTION);
-		$dbn->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE,PDO::FETCH_NAMED);
-		$dbn->query("set names utf8");
-		echo $sql_insert;
-		print_r($neirong);
+		$dbn=conDb();
+		// echo $sql_insert;
+		// print_r($neirong);
 		//$neirong['wjnr']=trim($neirong['wjnr']);
 		// echo "<br>";
 		$sth=$dbn->prepare($sql_insert);
 		$sth->execute();
-		$mbym="show.php?lx=".$lx."&id=".$dbn->lastInsertId();
+		$mbym="show.html?lx=".$lx."&id=".$dbn->lastInsertId();
 		header("Location:".$mbym);
 	}
 	catch(PDOException $e)
@@ -831,7 +661,7 @@ function updateArray($lx,$neirong)
 		$sth=$dbn->prepare($sql_update);
 		//print_r($arr);
 		echo "有".$sth->execute()."条数据被修改";
-		$mbym="show.php?id=".$neirong['id']."&lx=".$lx;
+		$mbym="show.html?id=".$neirong['id']."&lx=".$lx;
 		header("Location:".$mbym);
 
 	}

@@ -1,44 +1,5 @@
 <?php
-function cz($lx,$id)
-{
-    switch ($lx) 
-    {
-        case 'sw':
-            $sql_where="select * from sw where id = ?"; 
-            break;
-        case 'xf':
-            $sql_where="select * from xf where id = ?"; 
-            break;
-        case 'fw':
-            $sql_where="select * from fw where id = ?"; 
-            break;
-        case 'yb':
-            $sql_where="select * from yb where id = ?"; 
-            break;      
-        default:
-            # code...
-            break;
-    }
-    $dsn='mysql:host=localhost;dbname=mydoc;';
-    $usr='mydoc';
-    $key='mydoc';   
-    try
-    {
-        $rs="";
-        $dbn=new pdo($dsn,$usr,$key);
-        $dbn->setAttribute(PDO::ATTR_ERRMODE,PDO::ERRMODE_EXCEPTION);
-        $dbn->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE,PDO::FETCH_NAMED);
-        $dbn->query("set names utf8");
-        $sth=$dbn->prepare($sql_where);
-        $sth->execute(array($id));
-        $rs=$sth->fetch();
-        return $rs;
-    }
-    catch(PDOException $e)
-    {
-        echo "connect faild".$e->getMessage();
-    }   
-}
+include "config.php";
 function showImg($url,$no)
 {
     $id="slide".$no;
@@ -96,7 +57,7 @@ function echojpg($tifpath)
     }
 }
      
-$rs=cz($_GET['lx'],$_GET['id']);
+$rs=findContent($_GET['lx'],$_GET['id']);
 
         
 ?>  
