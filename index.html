@@ -2,18 +2,14 @@
   <html lang="en">
   <head>
     <meta charset="utf-8">
-	<title>公文管理系统</title>	
-	
+	<title>公文管理系统</title>		
 	<link href="css/modern.css" rel="stylesheet">
 	<link rel="stylesheet" href="css/s2.css" /> 
 </head>
 <body class="metrouicss span12">
 	<div id="mynav">
 	</div>
-	
-	
-	
-		<img id="logo" class="offset1 span12" src="./css/img/logo2.png">
+		<img id="logo" class="offset1 span12" src="./css/images/logo2.png">
 		<form action="searchall.php" method="get" enctype="multipart/form-data">
 			<div class="offset2 input-control text span8">
         	<input type="text" name="keywords" id="keywords" />
@@ -29,14 +25,18 @@
 	</div>
 	<div class="tab-content span12" id="recent">
 	</div>
-	<div id="windowsbg">
-	</div>
 
 	
 
  	<script src="js/jquery-1.9.0.js"></script>
  	<script src="js/myfunc.js"></script>
  	<script type="text/javascript" src="js/modern/input-control.js"></script>
+ 	<script type="text/javascript">
+ 		$(function() {
+			initNav();
+			initRecent();	
+		});
+ 	</script>
 
 </body>
 </html>

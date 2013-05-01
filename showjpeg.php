@@ -1,73 +1,70 @@
 <?php
-include "config.php";
-function showImg($url,$no)
-{
-    $id="slide".$no;
-    $html="<div class='slide image' id=".$id." style='display: none;'><img class='rot4' src=".$url." width='906' height='1285'></div>";
-    return $html;
-}
-function makeJpg($tifpath)
-{
-    $dir    =   "./jpg/".$tifpath;
-    if(file_exists($dir))   return;
-    $path   =   "./up/".$tifpath;
-    mkdir($path);
-    $image = new Imagick($path);
-    $image->writeImages($path.$tifpath.".jpg",false);
-    $page_no=$image->getNumberImages();
 
+    include "config.php";
+    function showImg($url,$no) //html 格式化单张图片
+    {
+        $id="slide".$no;
+        $html="<div class='slide image' id=".$id." style='display: none;'><img class='rot4' src=".$url."></div>";
+        return $html;
+    }
+    function getJpg($tifpath) //获取tif转换jpg地址
+    {
+        $fileName   =   rtrim($tifpath,'.tif');
+        $dir        =   "./jpg/".$fileName;
+        if(!file_exists($dir)) {           
+            mkdir($dir);
+            $filepath   =   $_SERVER['DOCUMENT_ROOT']."/github/mydoc/up/".$tifpath;   
+            $image = new Imagick($filepath);
+            $image->writeImages($_SERVER['DOCUMENT_ROOT']."/github/mydoc/jpg/".$fileName."/pic.jpg",false);
+        }
+        return glob($dir.'/*');
+    }
+    function htmlJpg($tifpath) //html格式化图片显示
+    {
+        $filepath   =   $_SERVER['DOCUMENT_ROOT']."/github/mydoc/up/".$tifpath;
+        if ((!$tifpath==null)&&(file_exists($filepath))) 
+        { 
+            $jpgs   =   getJpg($tifpath);
+            $picNum =   count($jpgs);
+            $html   =   "";
+            //print_r($jpgs);
+            if ($picNum==1)
+            {
+                $url    =   $jpgs[0];
+                $html.=showImg($url,1);            
+            }
+            else
+            {
+                $html="<div class='slide image' id='slide1'><img class='rot4' src=".$jpgs[0]."></div>";
+                for($i=1;$i<$picNum;$i++)
+                {
+                    $html.=showImg($jpgs[$i],$i+1);
+                }
 
-}
-function echojpg($tifpath)
-{
-    $dir="./jpg/".$tifpath;
-    echo $dir;
-    mkdir($dir);
-    $path = $_SERVER['DOCUMENT_ROOT']."/test/up/".$tifpath;
-    if ((!$tifpath==null)&&(file_exists($path))) 
-    { 
-        $tempname=time();           
-        $path = $_SERVER['DOCUMENT_ROOT']."/test/up/".$tifpath;
-       
-       
-        if ($page_no==1)
-        {
-            $url="./temp/".$tempname.".jpg";
-            $html.=showImg($url,1);            
+            }
+            echo $html;
         }
         else
         {
-
-            $html="<div class='slide image' id='slide1'><img class='rot4' src='./temp/".$tempname."-0.jpg' width='906' height='1285'></div>";
-            for($i=1;$i<$page_no;$i++)
-            {
-                $url="./temp/".$tempname."-".$i.".jpg";
-                $html.=showImg($url,$i+1);
-            }
-
+            echo "     
+                <div class='slide image' id='slide1'><img class='rot4' src='./up/null.png' width='906' height='1285'></div>
+                </div>      
+                ";
         }
-        echo $html;
     }
-    else
-    {
-        echo "     
-            <div class='slide image' id='slide1'><img class='rot4' src='./up/null.png' width='906' height='1285'></div>
-            </div>      
-            ";
-    }
-}
-     
-$rs=findContent($_GET['lx'],$_GET['id']);
 
-        
-?>  
+    
+
+?>         
+    <div class="carousel myspan" data-role="carousel" data-param-effect="fade" data-param-direction="left" data-param-duration="500" data-param-period="1000" >                             
             <div class="slides" >
-             <? echojpg($rs['path']); ?> 
-           
+                <? htmlJpg($_GET['tifpath']); ?>            
             </div>
             <span class="control left bg-color-blue" >‹</span>
             <span class="control right bg-color-blue">›</span> 
             <div class='func-button offset4 bottom'>
                  <a class="button bg-color-blue" id='rot'>旋转</a>
             </div>
+        </div>
+    </div>
                

@@ -24,9 +24,11 @@
 <div class="tab-content span12 center">
 	<div class='one-tab span9 center'>
 		<h2>收文登记</h2>
+		<form action='tjbd.php' method='post'  enctype='multipart/form-data' name='wenjianxinxi'  id='swdj'>
+		<input type='hidden' name='lx' value='sw' />
 			<div class="input-control text span3 v-span2 float-left">
 				<label ><h3>登记日期:</h3></label><br>
-				<input type="text" id='datepicker' name='date'/>
+				<input type="text" id='datepicker' name='riqi'/>
 			</div>	
 			<div class="span5 offset1 v-span2 float-left">
 				<label><h3>内部编号:</h3></label><br>
@@ -36,19 +38,18 @@
 				</div>
 				<span class="low-label float-left">)</span>
 				<div class="input-control text span1 float-left" >							
-					<input type="text" name='num'/>
+					<input type="text" name='nbbh'/>
 				</div>
 				<span class="low-label float-left">号</span>
 			</div>
-		<!-- </div> -->
 			<div style="clear:both"></div>
 			<div class="input-control text span3 v-span2 float-left">
 				<label ><h3>来文单位:</h3></label><br>
 				<input type="text" name='lwdw'/>
 			</div>	
 			<div class="input-control text span3 v-span2 offset1 float-left">
-				<label><h3>文件编号:</h3></label><br>											
-					<input type="text" name='wjbh'/>
+				<label><h3>文号:</h3></label><br>											
+					<input type="text" name='wenhao'/>
 			</div>			
 			<div class="input-control textarea float-clear">
 				<label ><h3>文件内容:</h3></label><br>
@@ -56,9 +57,10 @@
 			</div>
 			<div class="input-control text span3 v-span2">
 				<label><h3>上传文件:</h3></label><br>											
-					<input type="file" name='path'/>
+					<input type="file" name='path' accept="image/tif" />
 			</div>	
 			<a class='button default bg-color-blue' id='submit'>保存文档</a>
+		</form>
 	</div>
 	<div class='one-tab'></div>
 	<div class='one-tab'></div>
@@ -70,7 +72,8 @@
 		<b id="sticker-left"></b>
 		不能为空！
 	</div>
-
+<div id='testid'>
+</div>
         
 </body>
 </html>

@@ -25,7 +25,7 @@
             // animation direction (left, right) for some kinds of animation effect
             direction: 'right',
             // markers below the carousel
-            markers: 'on',
+            markers: 'off',
             // prev and next arrows
             arrows: 'on',
             // stop sliding when cursor over the carousel
@@ -364,26 +364,26 @@
         };
         var rotCurrentImg = function () {
             $currentImg=$('.slide img').eq(currentSlideIndex);
-            alert(currentSlideIndex);
+            // alert(currentSlideIndex);
+
             if($currentImg.hasClass('rot4'))
                 {
-                    $currentImg.removeClass('rot4').addClass('rot1');
-                    alert('rot4');
+                    $currentImg.removeClass('rot4').addClass('rot1');                
                     return;
                 }
             if($currentImg.hasClass('rot1'))
                 {
-                    $currentImg.removeClass('rot1').addClass('rot2');
+                    $currentImg.removeClass('rot1').addClass('rot2'); 
                     return;
                 }
             if($currentImg.hasClass('rot2'))
                 {
-                    $currentImg.removeClass('rot2').addClass('rot3');
+                    $currentImg.removeClass('rot2').addClass('rot3');  
                     return;
                 }
             if($currentImg.hasClass('rot3'))
                 {
-                    $currentImg.removeClass('rot3').addClass('rot4');
+                    $currentImg.removeClass('rot3').addClass('rot4'); 
                     return;
                 }
             };
@@ -417,26 +417,45 @@
         });
     };
     // autoinit
-    $(function(){
-        var url=new String("showjpeg.php");
-        var url2=url+document.location.search;
-        $("#myjpg").load(url2,function(){
-            $()[pluginName]({initAll: true});
-            if ($('.slide').length==1) {$('span.control').remove()} ;
-           
-            $('span.control').hide();
-            $('#rot').hide();  
-            $('#myjpg').hover(
-                function(){
-                    $('span.control').show(); 
-                    $('#rot').show();       
+    $(function(){     
+        var url="fc.php"+document.location.search;        
+        $("#fc").load(url,function(){
+            var lx=$("input:hidden").eq(0).val();
+            var id=$("input:hidden").eq(1).val();
+            var printUrl="print"+lx+".php"+"?lx="+lx+"&id="+id;
+            console.log(printUrl);
+            $("#print-btn").attr("href",printUrl);
+            var path=$("input:hidden:last").val();
+            var url2="showjpeg.php"+"?tifpath="+path;
+            $("#myjpg").load(url2,function(){
+                $()[pluginName]({initAll: true});
+                if ($('.slide').length==1) {$('span.control').remove()} ;           
+                $('span.control').hide();
+                $('#rot').hide();  
+                $('#myjpg').hover(function(){
+                        $('span.control').show(); 
+                        $('#rot').show();       
                 },
                 function(){
                     $('span.control').hide(); 
                     $('#rot').hide();        
                 });
+                
             });
         });
+        $(document).on('click','#jpg-btn',function(){
+            $("#windowsbg").show();
+            $("#myjpg").css("top","0");
+        });
+        $("#windowsbg").on("click",function(){
+            $("#windowsbg").hide();
+            $("#myjpg").css("top","-2000");
+        })
+
+    })
+    
+
+        
     
 
 })(jQuery);

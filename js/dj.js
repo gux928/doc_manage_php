@@ -6,46 +6,99 @@ function setDate () {
 	if(date<10) date='0'+date;
 	return d.getFullYear()+'-'+m+'-'+date;
 }
-var inputCheck = function() {
-	var data= new Array();
-	var fileNum=$("input[type='file']").length;
-	$("input[type='file']").each(function(){
-		data[$(this).attr('name')]=$(this).val();
+function showErrorNotic (pos) {
+	console.log(pos);
+	$('#error-notice').css({left:pos.left+80,top:pos.top});
+	$('#error-notice').fadeOut(2000,function(){
+	$('#error-notice').css({top:-999});
+	$('#error-notice').fadeIn();
 	});
-	console.log('filenum='+fileNum);
-	for (var i = 0 ; i < $('input').length-fileNum ; i++) {
-		$thisInput=$('input').eq(i);
-		var thisval=$.trim($thisInput.val());	
-		if(thisval==''){
-			var pos=$thisInput.offset();
-			console.log(pos);
-			$('#error-notice').css({left:pos.left+80,top:pos.top});
-			$('#error-notice').fadeOut(2000,function(){
-				$('#error-notice').css({top:-999});
-				$('#error-notice').fadeIn();
-			});
-			
-			return false;				//break;
-		}
-		else{
-
-			console.log($thisInput.val());
-			data[$thisInput.attr('name')]=$thisInput.val();
-		}
-	};	
-	thisval=$.trim($('textarea').val());
-	if(thisval==''){
-			var pos=$('textarea').offset();
-			console.log(pos);
-			$('#error-notice').css({left:pos.left+180,top:pos.top});
-			$('#error-notice').fadeOut(2000,function(){
-				$('#error-notice').css({top:-999});
-				$('#error-notice').fadeIn();
-			});
+}
+var inputCheck = function() {
+	var thisval,thisname,thistype;
+	// console.log('check');
+	// console.log($('#swdj input,textarea').length);
+	var pass=false;
+	$.each($('#swdj input,textarea'),function(){
+		thisval=$(this).val();
+		thisname=$(this).attr('name');
+		thistype=$(this).attr('type')
+		if(thisval==''&&thistype!='file'&&thisname!='wenhao'){
+			var pos=$(this).offset();
+			$(this).focus();
+			showErrorNotic(pos);
+			pass=false;
 			return false;
 		}
-	console.log(data);
+		else{
+			pass=true;
+			return true;
+		}	
+	});
+	if(pass){
+		$('#swdj').submit();
+	}
 }
+	// var data= new Array();
+	// var thisval,thisname;
+	// var fileNum=$("input[type='file']").length;
+	// $("input[type='file']").each(function(){
+	// 	data[$(this).attr('name')]=$(this).val();
+	// });
+	// console.log('filenum='+fileNum);
+	// var pass= true;
+	// pass=$.each ($('input'),function() {
+	// 	thisval=$.trim($(this).val());	
+	// 				//break;
+	// 	}
+	// 	else{
+	// 		thisname=$(this).attr('name');
+	// 		console.log(thisval);
+	// 		data.push({'name':thisname,'value':thisval});
+	// 		console.log(data.length);
+	// 	}
+	// });	
+	// if(pass){
+	// 	thisval=$.trim($('textarea').val());
+	// 	if(thisval==''){
+	// 		var pos=$('textarea').offset();
+	// 		$('textarea').focus();
+	// 		console.log(pos);
+	// 		$('#error-notice').css({left:pos.left+180,top:pos.top});
+	// 		$('#error-notice').fadeOut(2000,function(){
+	// 			$('#error-notice').css({top:-999});
+	// 			$('#error-notice').fadeIn();
+	// 		});
+	// 		return false;
+	// 	}
+	// 	else{
+	// 		thisname=$('textarea').attr('name');
+	// 		console.log(thisval);
+	// 		data.push({'name':thisname,'value':thisval});
+	// 		console.log(data.length);
+	// 		console.log($('#swdj').serialize());
+	// 		$.post('tjbd.php',$('#swdj').serialize(),function(data){
+	// 			console.log(data);
+	// 		});
+	// 	}
+	// }
+	//else return false;
+	
+	// //console.log('year='+data['year']);
+	// var pram=$.param(data);
+	// console.log(data.length);
+	// console.log(pram);
+	// $.each($(data),function(){
+	// 	console.log('key='+this.name+'  val='+this.value);
+	// });
+	
+
+// function serializeArray (array) {
+// 	var outPut='';
+// 	for (var i = array.length - 1; i >= 0; i--) {
+// 		array[i]
+// 	};
+// }
 function initDatepicker (argument) {
 	$('#datepicker').val(setDate());
 	$('#o-year').val(function(){
@@ -80,6 +133,10 @@ function initDatepicker (argument) {
 $(function() {
 	initDatepicker();
 	$('#submit').bind('click',inputCheck);
-
+	// var _mozi=['墨家','墨子','墨翟','兼爱非攻','尚同尚贤']; //本文所用到的数组, 下同
+	// $.each(_mozi,function(key,val){
+ //    //回调函数有两个参数,第一个是元素索引,第二个为当前值
+ //    alert('_mozi数组中 ,索引 : '+key+' 对应的值为: '+val);
+// });
 });
 

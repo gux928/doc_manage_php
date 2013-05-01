@@ -1,12 +1,21 @@
-*{clear;}
+*{
+	clear;
+	z-index: 0;
+}
+
 body 
 {
 	width: 960px;
 	margin: 0 auto;
 }
+
 .v-span10
 {
 	height: 900px;
+}
+.v-span9
+{
+	height: 540px;
 }
 .v-span3
 {
@@ -32,40 +41,7 @@ body
 {
 	clear: both;
 }
-.bottom
-{
-	position: absolute;
-	top:auto !important;
-	bottom: 15px;
-}
-.rot1
-{
-	-moz-transform:rotate(90deg); 
-	-webkit-transform:rotate(90deg); 
-	transform:rotate(90deg); 
-	filter:progid:DXImageTransform.Microsoft.BasicImage(rotation=1);
-}
-.rot2
-{
-	-moz-transform:rotate(180deg); 
-	-webkit-transform:rotate(180deg); 
-	transform:rotate(180deg); 
-	filter:progid:DXImageTransform.Microsoft.BasicImage(rotation=2);
-}
-.rot3
-{
-	-moz-transform:rotate(270deg); 
-	-webkit-transform:rotate(270deg); 
-	transform:rotate(270deg); 
-	filter:progid:DXImageTransform.Microsoft.BasicImage(rotation=3);
-}
-.rot4
-{
-	-moz-transform:rotate(360deg); 
-	-webkit-transform:rotate(360deg); 
-	transform:rotate(360deg); 
-	filter:progid:DXImageTransform.Microsoft.BasicImage(rotation=4);
-}
+
 .low-label
 {
 	/*min-height: 32px;*/
@@ -81,13 +57,6 @@ body
 .one-tab ul
 {
 	list-style: none;
-}
-#login-float
-{
-	height: 160px;
-	border:solid 1px;
-	z-index: 100;
-	position: fixed;
 }
 #login-float form
 {
@@ -119,17 +88,7 @@ body
 {
 	margin: 10px 0px 0px 0px;
 }
-#windowsbg
-{
-	display:none;
-	position:absolute;
-	width:100%;
-	height:100%;
-	background:#000;
-	top:0;
-	left:0;
-	opacity:0;
-}
+
 #rot
 {
 	opacity: 0.7;
@@ -146,6 +105,131 @@ body
 	width: 40%;
 	text-align: center;
 }
+/*导航和登录面板*/
+#login-panel{
+	width: 162px;
+	height: 200px;
+	position: absolute;
+	top: 32px;
+	/*background-color: #b91d47*/;
+
+}
+#login-btn{
+	height: 32px;
+	text-align: center;
+	padding: 5px 15px 5px 15px;
+}
+#login-panel-input{
+	width: 135px;
+	margin: 10px  auto auto 10px;
+	color: white !important;
+}
+.input-label{
+	margin: 10px auto 10px 10px;
+	display: block;
+
+}
+#login-error{
+	width: 260px;
+	line-height: 40px;
+	text-align: center;
+	padding: 0;
+	position: relative;
+	left:180px;
+	top:-300px;
+	z-index: 100;
+}
+#mynav{
+	height: 40px;
+}
+#index{
+	padding: 5px 5px 5px 15px;
+}
+
+
+
+
+/*内容显示页面*/
+.my-back-btn h1
+{
+	font-size: 3em;
+	position: relative;
+	left: 90px;
+	line-height: 48px;
+	margin: 0;
+	float: left;
+	clear:both;
+}
+#gnan{
+	margin: 20px 20px 20px 0;
+}
+#myjpg{
+	top:-2000px;
+	z-index: 3000;
+	position: absolute;
+	width: 960px;
+	height: auto;
+}
+.myspan
+{
+	height: 960px;
+	width: 960px;
+}
+#myjpg .carousel .slides img{
+	width: 650px;
+	height: auto;
+	margin-left:155px;
+	
+}
+#windowsbg
+{
+	display:none;
+	position:absolute;
+	width:100%;
+	height:100%;
+	background:#000;
+	top:0;
+	left:0;
+	opacity:0.7;
+	z-index: 2000;
+}
+.bottom
+{
+	position: absolute;
+	top:auto !important;
+	bottom: 80px;
+}
+.rot1
+{
+	-moz-transform:rotate(90deg); 
+	-webkit-transform:rotate(90deg); 
+	transform:rotate(90deg); 
+	filter:progid:DXImageTransform.Microsoft.BasicImage(rotation=1);
+}
+.rot2
+{
+	-moz-transform:rotate(180deg); 
+	-webkit-transform:rotate(180deg); 
+	transform:rotate(180deg); 
+	filter:progid:DXImageTransform.Microsoft.BasicImage(rotation=2);
+}
+.rot3
+{
+	-moz-transform:rotate(270deg); 
+	-webkit-transform:rotate(270deg); 
+	transform:rotate(270deg); 
+	filter:progid:DXImageTransform.Microsoft.BasicImage(rotation=3);
+}
+.rot4
+{
+	-moz-transform:rotate(360deg); 
+	-webkit-transform:rotate(360deg); 
+	transform:rotate(360deg); 
+	filter:progid:DXImageTransform.Microsoft.BasicImage(rotation=4);
+}
+
+
+/*错误提示*/
 #error-notice
 {
 	width: 200px;
@@ -173,4 +257,3 @@ body
   	border-color:#2d89ef;
   	
 }
-
